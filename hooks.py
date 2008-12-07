@@ -9,7 +9,6 @@
 
 from twisted.internet import defer, reactor
 from twisted.web import client
-from twisted.python import log
 
 import time
 import urllib
@@ -37,11 +36,10 @@ class HookManager(object):
     def __dispatchEventToRecipient(self, entry, recipient, ctime):
         
         def _good(page):
-            log.msg(page)
+            # looks like it worked
             pass
         
         def _bad(reason):
-            log.msg(reason)
             reactor.callLater(
                 self.cooldownTime,
                 self.__dispatchEventToRecipient,
@@ -61,13 +59,3 @@ class HookManager(object):
         else:
             # silently drop this guy because it is past his retry time
             pass
-
-
-if __name__ == "__main__":
-    import sys
-    log.startLogging(sys.stdout)
-    hooker = HookManager()
-    hooker.addRecipient("http://cacti.fihn.net/index.php")
-    hooker.addRecipient("http://localhost:8181/echo")
-    reactor.callLater(0,lambda: hooker.dispatchEvent("cats", {'x':'ex'}))
-    reactor.run()
