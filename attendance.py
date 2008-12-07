@@ -21,5 +21,7 @@ class AttendanceManager(object):
     def attend(self, key, updates):
         justAttended = self.cardStore.getCard(key, [self.attendKey])
         itsANewKid = justAttended[self.attendKey] is None
-        self.cardStore.updateCard(key, {self.attendKey: int(time.time())})
+        fullUpdates = {self.attendKey: int(time.time())}
+        fullUpdates.update(updates)
+        self.cardStore.updateCard(key, fullUpdates)
         if itsANewKid: self.onAttend(key)
