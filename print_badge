@@ -1,0 +1,12 @@
+#!/bin/bash
+
+num=$[ ( $RANDOM % 5 ) + 1 ]
+
+echo printing after delay $num
+sleep $num
+
+cat
+
+code=$[ ( $RANDOM % 2 ) ]
+echo exiting with code $code
+exit $code

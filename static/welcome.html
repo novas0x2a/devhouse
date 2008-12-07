@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>DevHouse, Welcome</title>
+<style type="text/css">
+body {text-align: center; font-size: 22px; font-family: Verdana, Arial;}
+body div div {margin-bottom: 10px;}
+div.pane {border: 2px solid black; margin: 0px auto; padding: 20px 15px; width: 475px;}
+form {margin: 0px; padding: 0px;}
+input {font-size: 20px; padding: 3px 5px;}
+input.text {width: 300px;}
+#header {margin: 50px; height: 225px;}
+</style>
+<script type="text/javascript" src="prototype.js"></script>
+<script type="text/javascript" src="effects.js"></script>
+<script type="text/javascript"><!--
+var WelcomeSystem = {
+    BASE_PATH: '/',
+    emailPane: null,
+    detailsPane: null,
+    thanksPane: null,
+    moniker: null,
+
+    timer: null,
+    polling: false,
+    key: '',
+    printJob: null,
+    data: null,
+
+    initialize: function() {
+        this.emailPane = $('email_form');
+        this.detailsPane = $('details_form');
+        this.thanksPane = $('thanks');
+        this.moniker = $('moniker');
+
+        this._event_submitEmail = this.event_submitEmail.bindAsEventListener(this);
+        this._event_submitDetails = this.event_submitDetails.bindAsEventListener(this);
+
+        Event.observe('email_form', 'submit', this._event_submitEmail);
+        Event.observe('details_form', 'submit', this._event_submitDetails);
+        this.startOver();
+    },
+
+    clearData: function() {
+        this.key = '';
+        this.printJob = null;
+        this.data = {
+            first_name: '',
+            last_name: '',
+            badge_tags: ''
+        };
+        for (var i in this.data) {
+            $(i).value = '';
+        }
+    },
+
+    hideAll: function() {
+        this.emailPane.hide();
+        this.detailsPane.hide();
+        this.thanksPane.hide();
+    },
+
+    startOver: function() {
+        this.clearData();
+        this.hideAll();
+        $('email').value = this.key;
+        this.emailPane.show();
+        $('email').focus();
+    },
+
+    startDetails: function() {
+        this.hideAll();
+        this.detailsPane.show();
+        $('first_name').focus();
+    },
+
+    startThanking: function() {
+        if (!this.timer) {
+            this.hideAll();
+            this.thanksPane.show();
+            this.moniker.update(this.data.first_name);
+            this.timer = new PeriodicalExecuter(function() {
+                if (!this.polling) {
+                    this.polling = true;
+                    new Ajax.Request(this.BASE_PATH+'printer/'+this.printJob, {
+                        method: 'get',
+                        onSuccess: function(t) {
+                            var json = eval('('+t.responseText+')');
+                            switch (json.status) {
+                                case 'finished':
+                                    this.finishThanking(2500);
+                                    break;
+
+                                case 'failed':
+                                    alert("The print job failed");
+                                    this.finishThanking();
+                                    break;
+
+                                case 'outstanding':
+                                    break;
+
+                                default:
+                            }
+                            this.polling = false;
+                        }.bind(this),
+                        onFailure: function() {
+                            alert("print job failed");
+                            this.finishThanking();
+                            this.polling = false;
+                        }.bind(this)
+                    });
+                }
+            }.bind(this), 1);
+        }
+    },
+
+    finishThanking: function(timeout) {
+        var timeout = timeout || 0;
+        if (this.timer) {
+            this.timer.stop();
+            this.timer = null;
+        }
+        if (timeout) {
+            setTimeout(this.startOver.bind(this), timeout);
+        } else {
+            this.startOver();
+        }
+    },
+
+    event_submitEmail: function(event) {
+        Event.stop(event);
+        var email = $F('email');
+        /* @todo: validate email here */
+        var valid = email.length;
+        if (valid) {
+            this.key = email;
+            new Ajax.Request(this.BASE_PATH+'prefill/'+this.key, {
+                method: 'get',
+                onSuccess: function(t) {
+                    var json = eval('('+t.responseText+')');
+                    for (var i in json) {
+                        var el = $(i);
+                        if (el) {
+                            el.value = json[i];
+                        }
+                    }
+                    this.startDetails();
+                }.bind(this),
+                onFailure: function() {
+                    alert('You fail.');
+                }
+            });
+        } else {
+            alert('Not a valid lookin email dude.');
+        }
+    },
+
+    event_submitDetails: function(event) {
+        Event.stop(event);
+        for (var i in this.data) {
+            this.data[i] = $F(i).strip();
+        }
+        if (this.data.first_name.length) {
+            new Ajax.Request(this.BASE_PATH+'attend/'+this.key, {
+                method: 'post',
+                parameters: this.data,
+                onSuccess: function(t) {
+                    var json = eval('('+t.responseText+')');
+                    this.printJob = json.printJobId;
+                    this.startThanking();
+                }.bind(this),
+                onFailure: function() {
+                    alert('something went wrong');
+                }
+            });
+        } else {
+            alert('something is invalid');
+        }
+    }
+};
+Event.observe(window, 'load', function() {
+    WelcomeSystem.initialize();
+});
+
+//-->
+</script>
+</head>
+<body>
+    <div id="header"><img src="shdh_logo.gif" alt="SHDH" title="SHDH" id="logo" /></div>
+    <form id="email_form" action="#" style="display: none;">
+        <div class="pane">
+            <div>
+                <label for="email">Email:</label>
+                <input type="text" id="email" value="" class="text" />
+            </div>
+            <div><input type="submit" value="Get this party started!"/></div>
+        </div>
+    </form>
+    <form id="details_form" action="#" style="display: none;">
+        <div class="pane">
+            <div>
+                <label for="first_name">First name:</label>
+                <input type="text" id="first_name" value="" class="text" />
+            </div>
+            <div>
+                <label for="last_name">Last name:</label>
+                <input type="text" id="last_name" value="" class="text" />
+            </div>
+            <div>
+                <label for="badge_tags">Badge tags:</label>
+                <input type="text" id="badge_tags" value="" class="text" />
+            </div>
+            <div><input type="submit" value="Finish this up!" /></div>
+        </div>
+    </form>
+    <div id="thanks" class="pane" style="display: none;">Thanks for showing up, <span id="moniker">dude</span>!</div>
+</body>
+</html>
