@@ -8,6 +8,11 @@
 # Copyright 2008, Joel Franusic
 # ALL RIGHTS RESERVED
 
+# TODO:
+#   - Add a library or wrapper for CUPS, send the PNG directly to CUPS
+#   - Get the job ID from CUPS, wait for the CUPS job to complete before exiting, fail if the CUPS job fails 
+#
+
 # We aren't using cStringIO or urllib2 right now...
 import gd, os, cStringIO, urllib2
 import simplejson as json
