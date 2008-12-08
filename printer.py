@@ -8,7 +8,7 @@
 
 from twisted.internet import protocol, reactor, defer
 from twisted.python import log
-import demjson
+import simplejson
 
 class SpamProtocol(protocol.ProcessProtocol):
     """I take some prepackaged spam and feed it to some process."""
@@ -55,7 +55,7 @@ class PrinterManager(object):
             del self.outstandingJobs[jobId]
             self.failedJobs[jobId] = card
             return False
-        spam = demjson.encode(card).encode('utf8')
+        spam = simplejson.dumps(card)
         spamProto = SpamProtocol(str(spam)+"\n")
         spamProto.d.addCallbacks(_done, _failed)
         

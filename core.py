@@ -12,20 +12,22 @@ from twisted.internet import reactor
 from twisted.python import log
 from twisted.web import server, resource, static, http
 
-import demjson
+import simplejson
 
 import cards
 import attendance
 import printer
 import hooks
-
-# helpers to turn python objs into transport strings
-def enjson(d): return demjson.encode(d).encode('utf8')
-def dejson(str): return demjson.decode(str.decode('utf8'))
+import secure
 
 ####
 #### Web Resources (like pages)
 ####
+
+class RootRedirector(resource.Resource):
+    def render(self, request):
+        request.redirect("/static/welcome.html")
+        return ""
 
 class Printer(resource.Resource):
     isLeaf = True
@@ -44,7 +46,7 @@ class Printer(resource.Resource):
             jobStatus = "outstanding"
         elif jobId in printerManager.getFailedJobs():
             jobStatus = "failed"
-        return enjson(dict(status=jobStatus))
+        return simplejson.dumps(dict(status=jobStatus))
         
 class Prefill(resource.Resource):
     isLeaf = True
@@ -56,7 +58,7 @@ class Prefill(resource.Resource):
         key = request.postpath[0]
         prefill = attendanceManager.prefill(key)
         request.setHeader("content-type", "application/json")
-        return enjson(prefill)
+        return simplejson.dumps(prefill)
                 
 class Attend(resource.Resource):
     isLeaf = True
@@ -73,7 +75,7 @@ class Attend(resource.Resource):
         fullCard = cardStore.getCard(key)
         printJobId, d = printerManager.printCard(fullCard)
         request.setHeader("content-type", "application/json")
-        return enjson(dict(printJobId=printJobId))
+        return simplejson.dumps(dict(printJobId=printJobId))
 
 ###
 ### Top Level
@@ -104,15 +106,25 @@ if __name__ == "__main__":
     
     printerManager = printer.PrinterManager()
 
-    # welcome root resource
-    root = resource.Resource()
-    root.putChild('static', static.File('static'))
-    root.putChild('printer', Printer(printerManager))
-    root.putChild('prefill', Prefill(attendanceManager))
-    root.putChild('attend', \
+    # secure welcome root resource
+    sroot = resource.Resource()
+    sroot.putChild('', RootRedirector())
+    sroot.putChild('static', static.File('static'))
+    sroot.putChild('printer', Printer(printerManager))
+    sroot.putChild('prefill', Prefill(attendanceManager))
+    sroot.putChild('attend', \
         Attend(attendanceManager, printerManager, cardStore))
+    
+    # insecure root
+    iroot = resource.Resource()
+    iroot.putChild('devhouse.pem', static.File('certs/ca-cert.pem'))
 
     # reactor setup
-    reactor.listenTCP(8181, server.Site(root))
+
+    reactor.listenSSL(10443, server.Site(sroot), \
+        secure.ServerContextFactory(myKey='certs/server.pem', trustedCA='certs/ca-cert.pem'))
+        
+    reactor.listenTCP(10080, server.Site(iroot)) 
+    
     log.msg("It's a piece of cake to break a pretty snake. [SYSTEM ONLINE]")
     reactor.run()

@@ -1,0 +1,29 @@
+# This directory must contain three files for working SSL support.
+#  - cluster.key (the private SSL key)
+#  - cluster.cert (the public cert for the wildcard *.cluster)
+#  - cluster.pem (the concatenation of the key with the cert)
+#  - sf_issuing.crt (the chaining cert needed for real signed wildcard support)
+
+# To make a self-signed wildcard cert for your cluster,
+# follow these steps:
+
+# 1) Make the keypair.
+# Don't add any sort of passphrase.
+openssl genrsa -rand /dev/urandom -out cluster.key 1024
+
+# 2) Generate a certificate request.
+# make up any responses, but make sure that the "Common Name" has the wildcard for the cluster
+# e.g., *.pbwiki.net
+# and ignore the "extra attributes"
+openssl req -new -key cluster.key -out cluster.csr
+
+
+# 3a) Self-sign the cert. (For development)
+openssl x509 -req -days 3000 -in cluster.csr -signkey cluster.key -out cluster.cert
+
+# 3b) Or, for a production, get a wildcart signed for the cluster. This is ~$200/year/cluster.
+#     Send the CSR to the service; you'll get a .cert back. Rename it to cluster.cert.
+
+
+# 4) Create the PEM file
+cat cluster.key cluster.cert > cluster.pem

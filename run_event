@@ -1,0 +1,2 @@
+#!/bin/sh
+python core.py data/cards.dat $*
