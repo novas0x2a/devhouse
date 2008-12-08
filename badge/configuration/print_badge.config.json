@@ -1,0 +1,60 @@
+{
+   "meta" : {
+      "output_file" : "hi_itsa_badge.XXXXXXXXX",
+      "suffix" : ".ps",
+      "temporary_dir" : "/tmp/"
+   },
+   "badge" : {
+      "height" : 464,
+      "width" : 600,
+      "file" : "badge.png",
+      "font_path" : "./configuration/fonts/",
+      "color" : [255, 255, 255]
+   },
+   "background" : {
+      "file" : "./configuration/background.png",
+      "x" : 0,
+      "y" : 0
+   },
+   "sponsor" : {
+      "file" : "./configuration/sponsor.png",
+      "x" : 390,
+      "y" : 344
+   },
+   "shdh_number" : {
+      "height" : 110,
+      "width" : 110,
+      "string" : "42",
+      "font" : "MyriadPro-Bold.otf",
+      "color" : [255, 255, 255],
+      "x" : 495,
+      "y" : -5
+   },
+   "first_name" : {
+      "height" : 160,
+      "width" : 580,
+      "string" : "First Name",
+      "font" : "MyriadPro-Semibold.otf",
+      "color" : [0, 0, 0],
+      "x" : 20,
+      "y" : 70
+   },
+   "last_name" : {
+      "height" : 60,
+      "width" : 570,
+      "string" : "Last Name",
+      "font" : "MyriadPro-Regular.otf",
+      "color" : [0, 0, 0],
+      "x" : 30,
+      "y" : null
+   },
+   "tags" : {
+      "height" : 35,
+      "width" : 590,
+      "string" : "shdh,hacking,cats,auto-scaling badges",
+      "font" : "MyriadPro-BoldCond.otf",
+      "color" : [0, 0, 0],
+      "x" : 10,
+      "y" : 305
+   }
+}

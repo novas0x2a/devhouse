@@ -1,0 +1,90 @@
+#!/usr/bin/env python
+#
+# print_badge
+#
+# Generates SHDH badges based on a JSON formatted input file.
+# Super ultra alpha (this doesn't even work yet!)
+#
+# Copyright 2008, Joel Franusic
+# ALL RIGHTS RESERVED
+
+# We aren't using cStringIO or urllib2 right now...
+import gd, os, cStringIO, urllib2
+import simplejson as json
+
+CONFIGURATION_FILE = './configuration/print_badge.config.json'
+# Eventually these should come from the CONFIGURATION_FILE
+IDEAL_FONT_SIZE = 300
+MIN_FONT_SIZE = 8
+
+# Shorthand for image positions.
+# B = Bottom, T = Top, L = Left, R = Right, X = x, Y = y
+(BL_X,BL_Y,BR_X,BR_Y,TL_X,TL_Y,TR_X,TR_Y) = (0,1,2,3,4,5,6,7)
+
+# Implement next:
+#   - Use a dict as the input
+#   - Margins: top, bottom, left, right
+#   - Alignment: left, right, center
+#   - Turn place into a class that can place both images and strings
+#     for example: place.image(properties) / place.string(properties)
+#   - Improve the image resizing code, it sucks
+def place(image,(input_x,input_y),(input_width,input_height),font,color,string):
+  im = gd.image((input_width,input_height))
+
+  # since we are making a temporary image, set these to origin
+  x,y = 0,0
+
+  size = IDEAL_FONT_SIZE + 1 # because we make at least one size reduction pass
+
+  p = (-1,-1,-1,-1,-1,-1,-1,-1) # This forces at least one pass
+  while im.boundsSafe((p[BR_X],p[BR_Y])) != True:
+    size -= 1
+    if size < MIN_FONT_SIZE:
+      print "Too many iterations in size adjustment"
+      break
+    p = im.get_bounding_rect(font,size,0,(x,y),string)
+
+    while p[TR_Y] != 0:
+      y += (1,-1)[ p[TR_Y] > 0 ] # Simulated ternary operator
+      if y < 0:
+        print "Too many iterations in height adjustment: ",y
+        break
+      p = im.get_bounding_rect(font,size,0,(x,y),string)
+
+  p = image.string_ttf(font, size, 0.0, (input_x, input_y + y), string, color)
+  return (input_x,p[BR_Y])
+  
+
+def load():
+  configuration_file = open(CONFIGURATION_FILE)
+  conf = json.load(configuration_file)
+
+  os.environ["GDFONTPATH"] = conf["badge"]["font_path"]
+ 
+  im = gd.image((conf["badge"]["width"],conf["badge"]["height"]))
+  white = im.colorAllocate(conf["badge"]["color"])
+
+  x,y = 0,0
+
+  background = gd.image(conf["background"]["file"])
+  background.copyTo(im,(conf["background"]["x"],conf["background"]["y"]))
+
+  sponsor = gd.image(conf["sponsor"]["file"])
+  sponsor.copyTo(im,(conf["sponsor"]["x"],conf["sponsor"]["y"]))
+
+  for item in ['first_name', 'last_name', 'tags', 'shdh_number']:
+    (x,y) = place(im,
+                  # all of this logic should be pushed to the place.string() method
+                  ((conf[item]["x"],x)[ conf[item]["x"] is None],
+                   (conf[item]["y"],y)[ conf[item]["y"] is None]),
+                  ((conf[item]["width"],conf["badge"]["width"])[ conf[item]["width"] is None ],
+                   (conf[item]["height"],conf["badge"]["height"])[ conf[item]["height"] is None ]),
+                  conf[item]["font"],
+                  im.colorAllocate(conf[item]["color"]),
+                  conf[item]["string"])
+
+  badge=open(conf["badge"]["file"],"w")
+  im.writePng(badge)
+  badge.close()
+
+load()
