@@ -17,9 +17,7 @@ input.text {width: 300px;}
 <script type="text/javascript"><!--
 var WelcomeSystem = {
     BASE_PATH: '/',
-    emailPane: null,
-    detailsPane: null,
-    thanksPane: null,
+    PATH_SEPERATOR: '/',
     moniker: null,
 
     timer: null,
@@ -28,10 +26,14 @@ var WelcomeSystem = {
     printJob: null,
     data: null,
 
+    panels: {
+        email: 'email_form',
+        details: 'details_form',
+        thanks: 'thanks'
+    },
+    visiblePanel: '',
+
     initialize: function() {
-        this.emailPane = $('email_form');
-        this.detailsPane = $('details_form');
-        this.thanksPane = $('thanks');
         this.moniker = $('moniker');
 
         this._event_submitEmail = this.event_submitEmail.bindAsEventListener(this);
@@ -55,35 +57,53 @@ var WelcomeSystem = {
         }
     },
 
-    hideAll: function() {
-        this.emailPane.hide();
-        this.detailsPane.hide();
-        this.thanksPane.hide();
+    showPane: function(key) {
+        if (this.visiblePane && this.panels[this.visiblePane]) {
+            $(this.panels[this.visiblePane]).hide();
+            Effect.SlideUp(this.panels[this.visiblePane], {
+                duration: .2,
+                afterFinish: function (key) {
+                    this.showAnimation(key)
+                }.bind(this, key)
+            });
+        } else {
+            this.visiblePane = '';
+            this.showAnimation(key);
+        }
+    },
+
+    showAnimation: function(key) {
+        if (this.panels[key]) {
+            Effect.SlideDown(this.panels[key], {
+                duration: .2,
+            });
+            this.visiblePane = key;
+        }
     },
 
     startOver: function() {
         this.clearData();
-        this.hideAll();
         $('email').value = this.key;
-        this.emailPane.show();
+        this.showPane('email');
         $('email').focus();
+        this.enableButtons();
     },
 
     startDetails: function() {
-        this.hideAll();
-        this.detailsPane.show();
+        this.showPane('details');
         $('first_name').focus();
+        this.enableButtons();
     },
 
     startThanking: function() {
         if (!this.timer) {
-            this.hideAll();
-            this.thanksPane.show();
+            this.disableButtons();
+            this.showPane('thanks');
             this.moniker.update(this.data.first_name);
             this.timer = new PeriodicalExecuter(function() {
                 if (!this.polling) {
                     this.polling = true;
-                    new Ajax.Request(this.BASE_PATH+'printer/'+this.printJob, {
+                    new Ajax.Request(this.BASE_PATH+'printer'+this.PATH_SEPERATOR+this.printJob, {
                         method: 'get',
                         onSuccess: function(t) {
                             var json = eval('('+t.responseText+')');
@@ -128,14 +148,30 @@ var WelcomeSystem = {
         }
     },
 
+    disableButtons: function() {
+        var buttons = document.getElementsByTagName('input');
+        for (var i = 0, c = buttons.length; i < c; i++) {
+            if ('button' == buttons[i].type || 'submit' == buttons[i].type) {
+                buttons[i].disabled = true;
+            }
+        }
+    },
+
+    enableButtons: function() {
+        var buttons = document.getElementsByTagName('input');
+        for (var i = 0, c = buttons.length; i < c; i++) {
+            if ('button' == buttons[i].type || 'submit' == buttons[i].type) {
+                buttons[i].disabled = false;
+            }
+        }
+    },
+
     event_submitEmail: function(event) {
         Event.stop(event);
         var email = $F('email');
-        /* @todo: validate email here */
-        var valid = email.length;
-        if (valid) {
+        if (email.match(/^[0-9a-zA-Z][-_\.0-9a-zA-Z+]*[0-9a-zA-Z]+@([0-9a-zA-Z]+[-_\.0-9a-zA-Z]*[0-9a-zA-Z]+)+\.[a-zA-Z]{2,6}$/)) {
             this.key = email;
-            new Ajax.Request(this.BASE_PATH+'prefill/'+this.key, {
+            new Ajax.Request(this.BASE_PATH+'prefill'+this.PATH_SEPERATOR+this.key, {
                 method: 'get',
                 onSuccess: function(t) {
                     var json = eval('('+t.responseText+')');
@@ -162,7 +198,7 @@ var WelcomeSystem = {
             this.data[i] = $F(i).strip();
         }
         if (this.data.first_name.length) {
-            new Ajax.Request(this.BASE_PATH+'attend/'+this.key, {
+            new Ajax.Request(this.BASE_PATH+'attend'+this.PATH_SEPERATOR+this.key, {
                 method: 'post',
                 parameters: this.data,
                 onSuccess: function(t) {
@@ -211,7 +247,10 @@ Event.observe(window, 'load', function() {
                 <label for="badge_tags">Badge tags:</label>
                 <input type="text" id="badge_tags" value="" class="text" />
             </div>
-            <div><input type="submit" value="Finish this up!" /></div>
+            <div>
+                <input type="button" value="Wow, thats not me" onclick="WelcomeSystem.startOver();" />
+                <input type="submit" value="Finish this up!" />
+            </div>
         </div>
     </form>
     <div id="thanks" class="pane" style="display: none;">Thanks for showing up, <span id="moniker">dude</span>!</div>
