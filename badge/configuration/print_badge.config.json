@@ -33,7 +33,7 @@
    "first_name" : {
       "height" : 160,
       "width" : 580,
-      "string" : "First Name",
+      "string" : "Matthew",
       "font" : "MyriadPro-Semibold.otf",
       "color" : [0, 0, 0],
       "x" : 20,
@@ -42,7 +42,7 @@
    "last_name" : {
       "height" : 60,
       "width" : 570,
-      "string" : "Last Name",
+      "string" : "Rosetta",
       "font" : "MyriadPro-Regular.otf",
       "color" : [0, 0, 0],
       "x" : 30,
@@ -51,7 +51,7 @@
    "tags" : {
       "height" : 35,
       "width" : 590,
-      "string" : "shdh,hacking,cats,auto-scaling badges",
+      "string" : "php,imp,pimp,xbox,damitgd",
       "font" : "MyriadPro-BoldCond.otf",
       "color" : [0, 0, 0],
       "x" : 10,

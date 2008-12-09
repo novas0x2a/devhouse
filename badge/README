@@ -1,6 +1,8 @@
-If you aren't using a Mac (10.5?)
+If you are using Mac OS X (10.5?):
 
-You'll have do do this stuff, dawg:
+   Copy libgd.2.dylib to /usr/local/lib/
 
-http://www.libgd.org/Downloads
-http://newcenturycomputers.net/projects/gdmodule.html
+If you aren't using a Mac (10.5?), you'll have do do this stuff, dawg:
+
+   http://www.libgd.org/Downloads
+   http://newcenturycomputers.net/projects/gdmodule.html
