@@ -9,13 +9,17 @@
 # ALL RIGHTS RESERVED
 
 # TODO:
+#   - Name the output file according to the name of the person
 #   - Add a library or wrapper for CUPS, send the PNG directly to CUPS
 #   - Get the job ID from CUPS, wait for the CUPS job to complete before exiting, fail if the CUPS job fails 
 #
 
 # We aren't using cStringIO or urllib2 right now...
-import gd, os, cStringIO, urllib2
+import gd, os, sys, cStringIO, urllib2
 import simplejson as json
+
+# set the working directory to the actual path of the script
+os.chdir(os.path.dirname(os.path.realpath(sys.argv[0])))
 
 CONFIGURATION_FILE = './configuration/print_badge.config.json'
 # Eventually these should come from the CONFIGURATION_FILE
@@ -63,6 +67,15 @@ def place(image,(input_x,input_y),(input_width,input_height),font,color,string):
 def load():
   configuration_file = open(CONFIGURATION_FILE)
   conf = json.load(configuration_file)
+
+  # read card data in from stdin
+  stdin = sys.stdin.read()
+  card = json.loads(stdin)
+
+  # merge in the card data we just got from STDIN into the default configuration
+  for key,value in card.iteritems():
+    if conf.has_key(key):
+      conf[key]["string"] = value
 
   os.environ["GDFONTPATH"] = conf["badge"]["font_path"]
  

@@ -73,6 +73,8 @@ class Attend(resource.Resource):
         updates = dict([(k,vs[0])for (k,vs) in request.args.items()])
         attendanceManager.attend(key, updates)
         fullCard = cardStore.getCard(key)
+        # pass the event number to the printer, but don't save it
+        fullCard['shdh_number'] = eventKey
         printJobId, d = printerManager.printCard(fullCard)
         request.setHeader("content-type", "application/json")
         return simplejson.dumps(dict(printJobId=printJobId))

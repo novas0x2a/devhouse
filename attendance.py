@@ -8,7 +8,7 @@
 import time
 
 class AttendanceManager(object):
-    prefillKeys = ["first_name", "last_name", "badge_tags", "badge_icons"]
+    prefillKeys = ["first_name", "last_name", "tags", "badge_icons"]
     
     def __init__(self, cardStore, eventKey, onAttend):
         self.cardStore = cardStore

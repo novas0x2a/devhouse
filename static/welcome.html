@@ -50,7 +50,7 @@ var WelcomeSystem = {
         this.data = {
             first_name: '',
             last_name: '',
-            badge_tags: ''
+            tags: ''
         };
         for (var i in this.data) {
             $(i).value = '';
@@ -244,8 +244,8 @@ Event.observe(window, 'load', function() {
                 <input type="text" id="last_name" value="" class="text" />
             </div>
             <div>
-                <label for="badge_tags">Badge tags:</label>
-                <input type="text" id="badge_tags" value="" class="text" />
+                <label for="tags">Badge tags:</label>
+                <input type="text" id="tags" value="" class="text" />
             </div>
             <div>
                 <input type="button" value="Wow, thats not me" onclick="WelcomeSystem.startOver();" />
