@@ -1,0 +1,4 @@
+To get this working on OS X 10.5:
+
+osx$ cp *gd.so ..
+osx$ cp libgd.2.dylib /usr/local/lib/

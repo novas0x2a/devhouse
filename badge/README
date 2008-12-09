@@ -1,8 +1,9 @@
-If you are using Mac OS X (10.5?):
+Make a badge thus:
+  $ python print_badge
 
-   Copy libgd.2.dylib to /usr/local/lib/
+Configure a badge thus:
+  $ emacs configuration/print_badge.config.json
 
-If you aren't using a Mac (10.5?), you'll have do do this stuff, dawg:
+Binaries for GD are in the osx/ directory
 
-   http://www.libgd.org/Downloads
-   http://newcenturycomputers.net/projects/gdmodule.html
+Install GD on debian with "apt-get install python-gd"
