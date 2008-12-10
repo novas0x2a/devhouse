@@ -9,6 +9,7 @@
 # ALL RIGHTS RESERVED
 
 # TODO:
+#   - Deal with unicode or extended characters (like umlauts)
 #   - Name the output file according to the name of the person
 #   - Add a library or wrapper for CUPS, send the PNG directly to CUPS
 #   - Get the job ID from CUPS, wait for the CUPS job to complete before exiting, fail if the CUPS job fails 
@@ -104,5 +105,7 @@ def load():
   badge=open(conf["badge"]["file"],"w")
   im.writePng(badge)
   badge.close()
+
+  # print(conf["badge"]["file"])
 
 load()
