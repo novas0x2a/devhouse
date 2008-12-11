@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Please Sign-In</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script language="javascript" type="text/javascript" src="actions.js">
+</script>
+<style type="text/css" media="screen">
+* {
+	margin:0;
+	padding:0;
+}
+body {
+	font-family:"Trebuchet MS";
+	font-size:24px;
+	color:#606060;
+	background:#fff;
+}
+img {border:0;}
+#container {padding-top:40px;}
+
+input, textarea {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#404040;
+}
+label {
+	cursor:pointer;
+	font-family:"Trebuchet MS";
+	font-size: 36px;
+	color:#606060;
+	line-height:50px;
+}
+label.chosen {color:#333;}
+
+/*Text inputs*/
+.textinput, .textinputHovered {
+	height:84px;
+	cursor:pointer;
+	background:url(images/input_bg.gif) repeat-x left top;
+	border:none;
+	padding:12px 0;
+	text-align: center;
+	font-size: 64px;
+	font-family:"Trebuchet MS";
+	font-weight:bold;
+	vertical-align:middle;
+}
+.textinputHovered {background-position:left bottom;}
+.inputCorner {
+	padding-bottom:0;
+	vertical-align:middle;
+}
+
+/*Button*/
+.buttonSubmit, .buttonSubmitHovered {
+	width:auto;
+	height:88px;
+	color:#FFF;
+	font-weight:bold;
+	font-family: Helvetica;
+	font-size: 36px;
+	padding:2px;
+	margin-top:10px;
+	background:url(images/button_bg.jpg) repeat-x left top;
+	cursor:pointer;
+	border:none;
+}
+.buttonSubmitHovered {background-position:left bottom;}
+.buttonImg {vertical-align:bottom;}
+</style>
+</head>
+<body>
+<div id="container">
+<form action="vars.php" method="post" class="niceform" target="_blank">
+  <div align="center">
+  	<img src="images/shdh_logo.gif" alt="SHDH 26" width="155" height="211" />
+    <br />
+    <br />
+    <br />
+    <table border="0" cellpadding="0" cellspacing="20">
+      <tr>
+        <td align="center"><label for="textinput">First:</label>          <br />
+          <input type="text" id="textinput" name="textinput" size="36" /></td>
+        <td align="center"><label for="label">Last:</label>          <br />
+          <input type="text" id="label" name="textinput2" size="36" /></td>
+      </tr>
+    </table>
+    <label for="textinput"></label>
+    <label for="label"></label>
+    </div>
+	<div align="center">
+	  <input type="submit" value="Victory!" />
+    </div>
+</form>
+</div>
+</body>
+</html>
