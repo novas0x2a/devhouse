@@ -4,13 +4,69 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>DevHouse, Welcome</title>
 <style type="text/css">
-body {text-align: center; font-size: 22px; font-family: Verdana, Arial;}
+body {text-align: center; font-size: 24px; font-family: "Trebuchet MS" Verdana, Arial; color: #606060; background: white;}
 body div div {margin-bottom: 10px;}
-div.pane {border: 2px solid black; margin: 0px auto; padding: 20px 15px; width: 475px;}
+div.pane {margin: 0px auto; width: 725px;}
+div.pane table {margin: 0px auto;}
+div.pane table input.textinput {width: 320px;}
 form {margin: 0px; padding: 0px;}
+img {border: none; vertical-align: middle; margin: 0px;}
+/*
 input {font-size: 20px; padding: 3px 5px;}
 input.text {width: 300px;}
-#header {margin: 50px; height: 225px;}
+*/
+#header {margin: 40px; margin-bottom: 20px; height: 225px;}
+
+#container {padding-top:40px;}
+
+input, textarea {
+	font-family:Arial, Helvetica, sans-serif;
+	color:#404040;
+}
+label {
+	cursor:pointer;
+	font-family:"Trebuchet MS";
+	font-size: 36px;
+	color:#606060;
+	line-height:50px;
+}
+label.chosen {color:#333;}
+
+/*Text inputs*/
+.textinput, .textinputHovered {
+	height:84px;
+	cursor:pointer;
+	background:url(images/input_bg.gif) repeat-x left top;
+	border:none;
+	padding:12px 0;
+	text-align: center;
+	font-size: 64px;
+	font-family:"Trebuchet MS";
+	font-weight:bold;
+	vertical-align:middle;
+}
+.textinputHovered {background-position:left bottom;}
+.inputCorner {
+	padding-bottom:0;
+	vertical-align:middle;
+}
+
+/*Button*/
+.buttonSubmit, .buttonSubmitHovered {
+	width:auto;
+	height:88px;
+	color:#FFF;
+	font-weight:bold;
+	font-family: Helvetica;
+	font-size: 36px;
+	padding:2px;
+	margin-top:30px;
+	background:url(images/button_bg.jpg) repeat-x left top;
+	cursor:pointer;
+	border:none;
+}
+.buttonSubmitHovered {background-position:left bottom;}
+.buttonImg {vertical-align:bottom;}
 </style>
 <script type="text/javascript" src="prototype.js"></script>
 <script type="text/javascript" src="effects.js"></script>
@@ -57,25 +113,35 @@ var WelcomeSystem = {
         }
     },
 
-    showPane: function(key) {
+    showPane: function(key, focus) {
+        var focus = focus || null;
         if (this.visiblePane && this.panels[this.visiblePane]) {
             $(this.panels[this.visiblePane]).hide();
             Effect.SlideUp(this.panels[this.visiblePane], {
                 duration: .2,
-                afterFinish: function (key) {
-                    this.showAnimation(key)
-                }.bind(this, key)
+                afterFinish: function (key, focus) {
+                    this.showAnimation(key, focus)
+                }.bind(this, key, focus)
             });
         } else {
             this.visiblePane = '';
-            this.showAnimation(key);
+            this.showAnimation(key, focus);
         }
     },
 
-    showAnimation: function(key) {
+    showAnimation: function(key, focus) {
+        var focus = focus || '';
+        if (focus) {
+            var afterFinish = function(focus) {
+                $(focus).select();
+            }.bind(this, focus);
+        } else {
+            var afterFinish = Prototype.emptyFunction;
+        }
         if (this.panels[key]) {
             Effect.SlideDown(this.panels[key], {
                 duration: .2,
+                afterFinish: afterFinish
             });
             this.visiblePane = key;
         }
@@ -84,13 +150,12 @@ var WelcomeSystem = {
     startOver: function() {
         this.clearData();
         $('email').value = this.key;
-        this.showPane('email');
-        $('email').focus();
+        this.showPane('email', 'email');
         this.enableButtons();
     },
 
     startDetails: function() {
-        this.showPane('details');
+        this.showPane('details', 'first_name');
         $('first_name').focus();
         this.enableButtons();
     },
@@ -223,29 +288,33 @@ Event.observe(window, 'load', function() {
 </script>
 </head>
 <body>
-    <div id="header"><img src="shdh_logo.gif" alt="SHDH" title="SHDH" id="logo" /></div>
+    <div id="header"><img src="shdh_logo.gif" align="SHDH" /></div>
     <form id="email_form" action="#" style="display: none;">
         <div class="pane">
             <div>
-                <label for="email">Email:</label>
-                <input type="text" id="email" value="" class="text" />
+                <label for="email">Email:</label><br />
+                <img src="images/input_left.gif" alt="" /><input type="text" id="email" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" />
             </div>
             <div><input type="submit" value="Get this party started!"/></div>
         </div>
     </form>
     <form id="details_form" action="#" style="display: none;">
         <div class="pane">
+            <table>
+                <tr>
+                    <td><label for="first_name">First:</label></td>
+                    <td>&nbsp;</td>
+                    <td><label for="last_name">Last:</label></td>
+                </tr>
+                <tr>
+                    <td><img src="images/input_left.gif" alt="" /><input type="text" id="first_name" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" /></td>
+                    <td>&nbsp;</td>
+                    <td><img src="images/input_left.gif" alt="" /><input type="text" id="last_name" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" /></td>
+                </tr>
+            </table>
             <div>
-                <label for="first_name">First name:</label>
-                <input type="text" id="first_name" value="" class="text" />
-            </div>
-            <div>
-                <label for="last_name">Last name:</label>
-                <input type="text" id="last_name" value="" class="text" />
-            </div>
-            <div>
-                <label for="tags">Badge tags:</label>
-                <input type="text" id="tags" value="" class="text" />
+                <label for="tags">Tags:</label><br />
+                <img src="images/input_left.gif" alt="" /><input type="text" id="tags" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" />
             </div>
             <div>
                 <input type="button" value="Wow, thats not me" onclick="WelcomeSystem.startOver();" />
