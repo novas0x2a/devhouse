@@ -1,0 +1,11 @@
+Before SHDH29:
+- Update the print_badge configuration file to define a new badge based on David's stopgap badge design.
+- Make a new certifiate authority, where the password to the certificate authoritie's private key is passphrase protected.
+- Make the private key for welcome.local password protected?
+
+Sometime soon:
+- Agree on what license to release our code under.
+- Indicate on the sign in page when the welcome system is down.
+- Make print_badge completely general, all configuration should come from the configuration file.
+- Add LOTS of documentation to the code.
+- Finish writing the mothership import/export code.

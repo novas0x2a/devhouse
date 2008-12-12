@@ -1,0 +1,7 @@
+Terminology:
+	"mothership":
+		A machine on the internet that persists visitor information between events.
+	"welcome server"
+		 A physical box that is present at events, it serves the login webpages and prints to a directly attached printer.
+
+
