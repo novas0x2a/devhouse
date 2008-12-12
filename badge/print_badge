@@ -7,16 +7,16 @@
 #
 # Copyright 2008, Joel Franusic
 # ALL RIGHTS RESERVED
-
+# 
 # TODO:
 #   - Deal with unicode or extended characters (like umlauts)
-#   - Name the output file according to the name of the person
+#   - Add fancypants python documentation
 #   - Add a library or wrapper for CUPS, send the PNG directly to CUPS
 #   - Get the job ID from CUPS, wait for the CUPS job to complete before exiting, fail if the CUPS job fails 
 #
 
 # We aren't using cStringIO or urllib2 right now...
-import gd, os, sys, cStringIO, urllib2
+import gd, os, sys, cStringIO, urllib2, subprocess, getopt
 import simplejson as json
 
 # set the working directory to the actual path of the script
@@ -30,6 +30,16 @@ MIN_FONT_SIZE = 8
 # Shorthand for image positions.
 # B = Bottom, T = Top, L = Left, R = Right, X = x, Y = y
 (BL_X,BL_Y,BR_X,BR_Y,TL_X,TL_Y,TR_X,TR_Y) = (0,1,2,3,4,5,6,7)
+
+def print_image(file):
+  print_file = 'lp -d DYMO_LabelWriter_400_USB_1 -o landscape -o fitplot'.split() + [file]
+  # print_file = 'lp -H test -d DYMO_LabelWriter_400_USB_1 -o landscape -o fitplot'.split() + [file]
+
+  opts, args = getopt.getopt(sys.argv[1:], "n") # "no print"
+  if '-n' in opts[0]:
+    print "Not executing command:",print_file
+  else:
+    subprocess.call(print_file)
 
 # Implement next:
 #   - Use a dict as the input
@@ -65,7 +75,7 @@ def place(image,(input_x,input_y),(input_width,input_height),font,color,string):
   return (input_x,p[BR_Y])
   
 
-def load():
+def main():
   configuration_file = open(CONFIGURATION_FILE)
   conf = json.load(configuration_file)
 
@@ -77,6 +87,8 @@ def load():
   for key,value in card.iteritems():
     if conf.has_key(key):
       conf[key]["string"] = value
+
+  conf["badge"]["file"] = ''.join((card["key"],"_shdh",card["shdh_number"],'.png'))
 
   os.environ["GDFONTPATH"] = conf["badge"]["font_path"]
  
@@ -106,6 +118,7 @@ def load():
   im.writePng(badge)
   badge.close()
 
-  # print(conf["badge"]["file"])
+  print_image(conf["badge"]["file"])
 
-load()
+if __name__ == "__main__":
+  main()
