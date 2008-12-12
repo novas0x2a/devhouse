@@ -36,7 +36,7 @@ def print_image(file):
   # print_file = 'lp -H test -d DYMO_LabelWriter_400_USB_1 -o landscape -o fitplot'.split() + [file]
 
   opts, args = getopt.getopt(sys.argv[1:], "n") # "no print"
-  if '-n' in opts[0]:
+  if opts and '-n' in opts[0]:
     print "Not executing command:",print_file
   else:
     subprocess.call(print_file)
@@ -88,7 +88,7 @@ def main():
     if conf.has_key(key):
       conf[key]["string"] = value
 
-  conf["badge"]["file"] = ''.join((card["key"],"_shdh",card["shdh_number"],'.png'))
+  conf["badge"]["file"] = ''.join(('./completed/',card["key"],"_shdh",card["shdh_number"],'.png'))
 
   os.environ["GDFONTPATH"] = conf["badge"]["font_path"]
  
