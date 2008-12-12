@@ -3,20 +3,20 @@
 # print_badge
 #
 # Generates SHDH badges based on a JSON formatted input file.
-# Super ultra alpha (this doesn't even work yet!)
+# Version: Alpha
 #
 # Copyright 2008, Joel Franusic
 # ALL RIGHTS RESERVED
 # 
 # TODO:
-#   - Deal with unicode or extended characters (like umlauts)
+#   - Give helpful error messages when the configuration file is missing parts that we expect.
 #   - Add fancypants python documentation
 #   - Add a library or wrapper for CUPS, send the PNG directly to CUPS
 #   - Get the job ID from CUPS, wait for the CUPS job to complete before exiting, fail if the CUPS job fails 
 #
 
 # We aren't using cStringIO or urllib2 right now...
-import gd, os, sys, cStringIO, urllib2, subprocess, getopt
+import gd, os, sys, cStringIO, urllib2, subprocess, getopt, unicodedata
 import simplejson as json
 
 # set the working directory to the actual path of the script
@@ -103,7 +103,10 @@ def main():
   sponsor = gd.image(conf["sponsor"]["file"])
   sponsor.copyTo(im,(conf["sponsor"]["x"],conf["sponsor"]["y"]))
 
+  # Ugh, this needs to be refactored to pass a dict ASAP
   for item in ['first_name', 'last_name', 'tags', 'shdh_number']:
+    if defined conf["badge"]["remove_accents"]:
+      conf[item]["string"] = unicodedata.normalize('NFKD', conf[item]["string"]).encode('ascii','ignore')
     (x,y) = place(im,
                   # all of this logic should be pushed to the place.string() method
                   ((conf[item]["x"],x)[ conf[item]["x"] is None],

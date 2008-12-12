@@ -9,6 +9,7 @@
       "width" : 600,
       "file" : "badge.png",
       "font_path" : "./configuration/fonts/",
+      "remove_accents" : true,
       "color" : [255, 255, 255]
    },
    "background" : {
