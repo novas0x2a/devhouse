@@ -97,6 +97,7 @@ var WelcomeSystem = {
 
         Event.observe('email_form', 'submit', this._event_submitEmail);
         Event.observe('details_form', 'submit', this._event_submitDetails);
+        Event.observe('header', 'click', function(){Effect.Pulsate($('header'),{pulses: 1, duration: 0.2});});
         this.startOver();
     },
 
@@ -178,7 +179,7 @@ var WelcomeSystem = {
                                     break;
 
                                 case 'failed':
-                                    alert("The print job failed");
+                                    alert("Your badge (job "+this.printJob+") failed to print.  Please notify an event host.");
                                     this.finishThanking();
                                     break;
 
@@ -190,7 +191,7 @@ var WelcomeSystem = {
                             this.polling = false;
                         }.bind(this),
                         onFailure: function() {
-                            alert("print job failed");
+                            alert("Failed to get the print status for your badge (job "+this.printJob+").  Please notify an event host.");
                             this.finishThanking();
                             this.polling = false;
                         }.bind(this)
@@ -249,11 +250,11 @@ var WelcomeSystem = {
                     this.startDetails();
                 }.bind(this),
                 onFailure: function() {
-                    alert('You fail.');
+                    alert('Failed to fetch prefill details, server did not respond. Please notify an event host.');
                 }
             });
         } else {
-            alert('Not a valid lookin email dude.');
+            Effect.Shake($('email').parentNode)
         }
     },
 
@@ -272,11 +273,11 @@ var WelcomeSystem = {
                     this.startThanking();
                 }.bind(this),
                 onFailure: function() {
-                    alert('something went wrong');
+                    alert('Failed to submit your badge details.  Please notify an event host.');
                 }
             });
         } else {
-            alert('something is invalid');
+            Effect.Shake($('first_name').parentNode);
         }
     }
 };
@@ -295,21 +296,26 @@ Event.observe(window, 'load', function() {
                 <label for="email">Email:</label><br />
                 <img src="images/input_left.gif" alt="" /><input type="text" id="email" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" />
             </div>
-            <div><input type="submit" value="Get this party started!"/></div>
+            <div><img src="images/button_left.jpg" alt="" class="buttonImg"/><input type="submit" value="Get this party started!" class="buttonSubmit"/><img src="images/button_right.jpg" alt="" class="buttonImg"/></div>
         </div>
     </form>
     <form id="details_form" action="#" style="display: none;">
         <div class="pane">
             <table>
                 <tr>
-                    <td><label for="first_name">First:</label></td>
+                    <td>
+                      <div>
+                        <label for="first_name">First:</label><br />
+                        <img src="images/input_left.gif" alt="" /><input type="text" id="first_name" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" />
+                      </div>
+                    </td>
                     <td>&nbsp;</td>
-                    <td><label for="last_name">Last:</label></td>
-                </tr>
-                <tr>
-                    <td><img src="images/input_left.gif" alt="" /><input type="text" id="first_name" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" /></td>
-                    <td>&nbsp;</td>
-                    <td><img src="images/input_left.gif" alt="" /><input type="text" id="last_name" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" /></td>
+                    <td>
+                      <div>
+                        <label for="last_name">Last:</label><br />
+                        <img src="images/input_left.gif" alt="" /><input type="text" id="last_name" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" />
+                      </div>
+                    </td>
                 </tr>
             </table>
             <div>
@@ -317,8 +323,8 @@ Event.observe(window, 'load', function() {
                 <img src="images/input_left.gif" alt="" /><input type="text" id="tags" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" />
             </div>
             <div>
-                <input type="button" value="Wow, thats not me" onclick="WelcomeSystem.startOver();" />
-                <input type="submit" value="Finish this up!" />
+                <img src="images/button_left.jpg" alt="" class="buttonImg"/><input type="button" value="&lt;&lt; Oops!" onclick="WelcomeSystem.startOver();" class="buttonSubmit"/><img src="images/button_right.jpg" alt="" class="buttonImg"/>
+                <img src="images/button_left.jpg" alt="" class="buttonImg"/><input type="submit" value="Finish this up!" class="buttonSubmit"/><img src="images/button_right.jpg" alt="" class="buttonImg"/>
             </div>
         </div>
     </form>
