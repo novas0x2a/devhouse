@@ -114,7 +114,7 @@ if __name__ == "__main__":
     if len(parts) < 2:
       print "Event key SHOULD REALLY look like \"shdh_99\"!!"
       sys.exit(2)
-    printerManager.updates.update(shdh_number=n)
+    printerManager.updates.update(shdh_number=parts[1])
 
     # secure welcome root resource
     sroot = resource.Resource()
