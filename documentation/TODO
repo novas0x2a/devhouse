@@ -5,6 +5,9 @@ Before SHDH29:
 - Make a generic client certificate (not adam.p12)
 
 Sometime soon:
+- Rename "tags" back to "badge_tags" so we can store someone's complete or
+  general interests in "tags" not just what they feel like showing off for this
+  particular event.
 - Finish writing the mothership import/export code.
 - Agree on what license to release our code under.
 - Indicate on the sign-in page when the welcome system is down.

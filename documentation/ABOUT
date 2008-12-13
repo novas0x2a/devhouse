@@ -1,7 +1,20 @@
 Terminology:
-	"mothership":
-		A machine on the internet that persists visitor information between events.
-	"welcome server"
-		 A physical box that is present at events, it serves the login webpages and prints to a directly attached printer.
+
+"mothership"
+  A machine on the internet that persists visitor information between events.
+
+"welcome server"
+  A physical box that is present at events, it serves the login webpages and prints to a directly attached printer.
+
+"card"
+  A set of key/value mappings that represent everything we know about a vistor.
+
+"rolodex"
+  A mapping from keys to cards that can be used to look up a vistor's details
+  given their email address aka "rolodex key".
+
+"event key"
+  The name for a particular social event, conventionally the name of the event
+  series joined with the sequence number by an underscore, ex: "shdh_12".
 
 

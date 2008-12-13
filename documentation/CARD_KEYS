@@ -1,0 +1,62 @@
+Card keys with special meanings known so far:
+
+"first_name"
+  The visitor's first name.
+  Example: "Adam"
+  Notes:
+    - The welcome UI should require at least one character in this field (we
+      gotta welcome SOMEBODY!).
+
+"last_name"
+  The visitor's last name.
+  Example: "Smith"
+  Notes:
+    - Might be empty for really casual folks.
+
+"badge_icons"
+  The identifiers for the icons the visitor wants on their badge.
+  Example: "host, hireme"
+  Notes:
+    - Identifiers are like Java variable names.
+    - Items are separated by a comma.
+    - Whitespace should be ignored.
+    - A trailing comma is allowed.
+    - The welcome UI should require some special magic before allowing selection
+      of SPECIAL icons like "host"
+    - Icon ideas:
+        special: "host"
+        job: "hireme" / "hiring"
+        vc: "fundme" / "funding"
+        misc: "newbie"
+        preference: "pirate" / "ninja"
+        
+
+"badge_tags"
+  The string of text the visitor want's stuck on their badge under their name.
+  Example: "pyton, cobra, http://shdh.org"
+  Notes:
+    - Most people write comma separated identifiers, but in general they could
+      want anything under their name.
+    - Trimming whitespace groups down to a single space and even removing all
+      spaces adjacent to punctuation is probably reasonable if you want to pack
+      their content in.
+    - Allowing HTML sounds cool but probably would just make a mess.
+
+"key"
+  The rolodex key used to look up this visitor's card.
+  Example: "adam@adamsmith.as"
+  Notes:
+    - Rolodex keys are usually email addresses (as restricted by the welcome
+      UI), but anything is probably fine.
+
+"event_key"
+  This is not really part of a visitor's persisted card, but is sent with it for
+    the purposes of printing.
+  Example: "shdh_12"
+
+"attended_"{event_key}
+  This is a key family representing the arrival time at a given event.
+  Example (for key "attended_shdh_12"): 1238712837 (some random unix timestamp)
+  Notes:
+    - The presence of this key is used to de-duplicate welcome UI interactions
+      to produce the ATTENDED spawned event.
