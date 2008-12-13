@@ -72,10 +72,10 @@ class Attend(resource.Resource):
         key = request.postpath[0]
         updates = dict([(k,vs[0])for (k,vs) in request.args.items()])
         attendanceManager.attend(key, updates)
+
         fullCard = cardStore.getCard(key)
-        # pass the event number to the printer, but don't save it
-        fullCard['shdh_number'] = eventKey
         printJobId, d = printerManager.printCard(fullCard)
+
         request.setHeader("content-type", "application/json")
         return simplejson.dumps(dict(printJobId=printJobId))
 
@@ -84,7 +84,7 @@ class Attend(resource.Resource):
 ###
 
 if __name__ == "__main__":
-    import sys
+    import sys, os
     if len(sys.argv) != 3:
         print "%s cards.dat event_0" % sys.argv[0]
         sys.exit(1)
@@ -94,19 +94,27 @@ if __name__ == "__main__":
     log.startLogging(sys.stdout)
     
     hookManager = hooks.HookManager()
-    hookManager.addRecipient("http://cacti.fihn.net/")
+    # example: hookManager.addRecipient("http://cacti.fihn.net/")
     
     cardStore = cards.CardStore(dat)
 
     def onAttend(key):
         fullCard = cardStore.getCard(key)
-        hookManager.dispatchEvent("org.devhouse.event.Attendance", fullCard)
-        log.msg("looks like %s arrived." % key)
+        hookManager.dispatchEvent("org.superhappydevhouse.event.Attendance", fullCard)
+        log.msg("ARRIVAL: looks like %s arrived." % key)
 
     attendanceManager = \
         attendance.AttendanceManager(cardStore, eventKey, onAttend)
     
     printerManager = printer.PrinterManager()
+    printerManager.updates.update(event_key=eventKey)
+
+    # XXX: adding shdh_number for badge print compatibility
+    parts = eventKey.split("_")
+    if len(parts) < 2:
+      print "Event key SHOULD REALLY look like \"shdh_99\"!!"
+      sys.exit(2)
+    printerManager.updates.update(shdh_number=n)
 
     # secure welcome root resource
     sroot = resource.Resource()
@@ -122,6 +130,9 @@ if __name__ == "__main__":
     iroot.putChild('devhouse.pem', static.File('certs/ca-cert.pem'))
 
     # reactor setup
+
+    if os.environ.get('INSECURE',False):
+        reactor.listenTCP(10081, server.Site(sroot))
 
     reactor.listenSSL(10443, server.Site(sroot), \
         secure.ServerContextFactory(myKey='certs/server.pem', trustedCA='certs/ca-cert.pem'))

@@ -9,6 +9,7 @@
 from twisted.internet import protocol, reactor, defer
 from twisted.python import log
 import simplejson
+import copy
 
 class SpamProtocol(protocol.ProcessProtocol):
     """I take some prepackaged spam and feed it to some process."""
@@ -31,6 +32,7 @@ class PrinterManager(object):
     """I implement a fancy print queue."""
 
     commandLine = ["./print_badge"]
+    updates = {}
 
     def __init__(self):
         self.lastJobId = 0
@@ -55,6 +57,8 @@ class PrinterManager(object):
             del self.outstandingJobs[jobId]
             self.failedJobs[jobId] = card
             return False
+        fullCard = copy.copy(card)
+        fullCard.update(self.updates)
         spam = simplejson.dumps(card)
         spamProto = SpamProtocol(str(spam)+"\n")
         spamProto.d.addCallbacks(_done, _failed)
