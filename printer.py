@@ -59,7 +59,7 @@ class PrinterManager(object):
             return False
         fullCard = copy.copy(card)
         fullCard.update(self.updates)
-        spam = simplejson.dumps(card)
+        spam = simplejson.dumps(fullCard)
         spamProto = SpamProtocol(str(spam)+"\n")
         spamProto.d.addCallbacks(_done, _failed)
         
