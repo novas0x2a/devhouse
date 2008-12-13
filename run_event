@@ -1,2 +1,2 @@
 #!/bin/sh
-python core.py data/cards.dat $*
+python core.py data/rolodex.dat $*
