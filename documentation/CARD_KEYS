@@ -48,6 +48,9 @@ Card keys with special meanings known so far:
   Notes:
     - Rolodex keys are usually email addresses (as restricted by the welcome
       UI), but anything is probably fine.
+    - If we want to share rolodex data between events, we should consider using
+      a key of hmac(shared_secret,email_address) to preserve the privacy of
+      attendees.
 
 "event_key"
   This is not really part of a visitor's persisted card, but is sent with it for
