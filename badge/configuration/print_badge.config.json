@@ -10,7 +10,8 @@
       "file" : "badge.png",
       "font_path" : "./configuration/fonts/",
       "remove_accents" : true,
-      "color" : [255, 255, 255]
+      "color" : [255, 255, 255],
+      "design" : ["background","sponsor","shdh_number","first_name","last_name","tags"]
    },
    "background" : {
       "file" : "./configuration/background.png",
