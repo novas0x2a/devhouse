@@ -1,5 +1,5 @@
 Make a badge thus:
-  $ python print_badge
+  $ cat ../example_print_badge_input | ./print_badge -n
 
 Configure a badge thus:
   $ emacs configuration/print_badge.config.json

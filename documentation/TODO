@@ -1,5 +1,4 @@
-Before SHDH29:
-- Update the print_badge configuration file to define a new badge based on David's stopgap badge design.
+Before SHDH30:
 - Make a new certificate authority, where the password to the certificate authority's private key is passphrase protected.
 - Make the private key for welcome.local password protected if twisted can handle it, otherwise, protect the private key in some other way.
 - Make a generic client certificate (not adam.p12)
@@ -11,7 +10,6 @@ Sometime soon:
 - Finish writing the mothership import/export code.
 - Agree on what license to release our code under.
 - Indicate on the sign-in page when the welcome system is down.
-- Make print_badge COMPLETELY general, all configuration should come from the configuration file.
 - Add LOTS of documentation to the code.
 
 THE AWESOME FUTURE:
