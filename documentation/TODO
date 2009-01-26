@@ -1,8 +1,3 @@
-Before SHDH30:
-- Make a new certificate authority, where the password to the certificate authority's private key is passphrase protected.
-- Make the private key for welcome.local password protected if twisted can handle it, otherwise, protect the private key in some other way.
-- Make a generic client certificate (not adam.p12)
-
 Sometime soon:
 - Rename "tags" back to "badge_tags" so we can store someone's complete or
   general interests in "tags" not just what they feel like showing off for this
@@ -14,5 +9,5 @@ Sometime soon:
 
 THE AWESOME FUTURE:
 - Add a webhook subscription mechanism wherein people at the even can subscribe to a webhook feed of events.
-- Add webhook endpoints to update IRC and Twitter when people arrive.
-- Jeff, give names to all the parts of the world of webhooks.
+- Add webhook endpoints to update IRC when people arrive.
+- Jeff: Give names to all the things in the world of webhooks.
