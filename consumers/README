@@ -1,0 +1,32 @@
+WEB HOOK CONSUMER HACK-IT-UP TOOKIT
+
+Twisted makes writing web servers from scratch pretty easy, but we can make it
+easier.  When you really just want to run a little bit of code on a request
+Twisted requires you to create a custom Resource class and feed this through a
+Site into the reactor as a TCP server -- frack that.
+
+The "consumer" module provides one helper function that can be used as a
+decorator to upgrade a single function to a custom Resource and another to
+simplify serving it on a given port.
+
+Here's a simple example:
+
+> from consumer import consumer, server
+> 
+> @consumer
+> def dump(request):
+>   print request
+>   return "thanks!"
+> 
+> server(dump, 80)
+
+And, if you aren't afraid of decorators doing a little more than decorating,
+consider this variant that the module also supports:
+
+
+> from consumer import easy_consume
+> 
+> @easy_consume(80)
+> def f(request):
+>   print request
+>   return "whatevz!"

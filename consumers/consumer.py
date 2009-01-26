@@ -7,7 +7,9 @@ def consumer(f):
   R.render = lambda res, req: f(req)
   return R()
 
-def serve(res, port=10100):
+def serve(res, port):
   reactor.listenTCP(port, server.Site(res))
   reactor.run()
 
+def easy_consume(port):
+  return lambda f: serve(consumer(f),port)
