@@ -126,8 +126,7 @@ if __name__ == "__main__":
         Attend(attendanceManager, printerManager, cardStore))
     
     # insecure root
-    iroot = resource.Resource()
-    iroot.putChild('devhouse.pem', static.File('certs/ca-cert.pem'))
+    iroot = static.File('bootstrap')
 
     # reactor setup
 
