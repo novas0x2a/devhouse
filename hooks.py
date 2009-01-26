@@ -25,8 +25,9 @@ class HookManager(object):
     def addRecipient(self, recipient):
         self.recipients.append(recipient)
         
-    def dispatchEvent(self, event, args={}):
+    def dispatchEvent(self, event, args={}, **kw):
         entry = {"event": event}
+        entry.update(kw)
         entry.update(args)
         
         now = time.time()

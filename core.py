@@ -95,12 +95,14 @@ if __name__ == "__main__":
     
     hookManager = hooks.HookManager()
     # example: hookManager.addRecipient("http://cacti.fihn.net/")
+    hookManager.addRecipient("http://localhost:10100/")
     
     cardStore = cards.CardStore(dat)
 
     def onAttend(key):
         fullCard = cardStore.getCard(key)
-        hookManager.dispatchEvent("org.superhappydevhouse.event.Attendance", fullCard)
+        hookManager.dispatchEvent(
+          "org.superhappydevhouse.event.Attendance", fullCard, event_key=eventKey)
         log.msg("ARRIVAL: looks like %s arrived." % key)
 
     attendanceManager = \
