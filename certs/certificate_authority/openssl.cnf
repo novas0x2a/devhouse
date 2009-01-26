@@ -25,10 +25,10 @@ new_certs_dir   = $dir/newcerts
 crl_dir         = $dir/crl
 database        = $dir/index
 
-certificate     = $dir/ca-cert.pem
+certificate     = $dir/shdh-ca.pem
 serial          = $dir/serial
-crl             = $dir/ca-crl.pem
-private_key     = $dir/private/ca-key.pem
+crl             = $dir/crl.pem
+private_key     = $dir/private/shdh-ca-private-key.pem
 RANDFILE        = $dir/private/.rand
 
 x509_extensions = usr_cert
@@ -81,7 +81,7 @@ emailAddress            = optional
 ####################################################################
 [ req ]
 default_bits            = 2048
-default_keyfile         = ./private/ca-key.pem
+default_keyfile         = ./private/shdh-ca-private-key.pem
 default_md              = sha1
 
 prompt                  = no
@@ -106,7 +106,7 @@ string_mask = nombstr
 # req_extensions = v3_req
 
 [ root_ca_distinguished_name ]
-commonName = SHDH
+commonName = SuperHappyDevHouse
 countryName = US
 stateOrProvinceName = California
 localityName = Bay Area
@@ -126,7 +126,7 @@ basicConstraints=CA:FALSE
 subjectKeyIdentifier=hash
 authorityKeyIdentifier=keyid,issuer:always
 
-nsCaRevocationUrl               = https://shdh.org/ca-crl.pem
+nsCaRevocationUrl               = https://shdh.org/crl.pem
 #nsBaseUrl
 #nsRevocationUrl
 #nsRenewalUrl

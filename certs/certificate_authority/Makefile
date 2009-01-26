@@ -51,7 +51,7 @@ init:
 	@echo '01' > serial
 	@touch index
 	# NOTE use "-newkey rsa:2048" if running OpenSSL 0.9.8a or higher
-	@openssl req -nodes -config openssl.cnf -days 1825 -x509 -newkey rsa -out ca-cert.pem -outform PEM
+	@openssl req -config openssl.cnf -days 339 -x509 -newkey rsa:2048 -out shdh-ca.pem -outform PEM
 
 help:
 	@echo make sign
