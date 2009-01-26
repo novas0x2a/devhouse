@@ -30,3 +30,15 @@ consider this variant that the module also supports:
 > def f(request):
 >   print request
 >   return "whatevz!"
+
+The "serve" function is quite generous in what it accepts for its first
+argument. Assuming you have defined 'f' and 'g' as consumers as before you can
+create a server from both consumers at once using syntax like this:
+
+> serve({'letter_f':f,'letter_g':g})
+
+or simply
+
+> serve([f,g])
+
+if you' like '/f' to be handled by f and '/g' to be handled by g.
