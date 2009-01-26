@@ -1,0 +1,76 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 2 (0x2)
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: CN=SuperHappyDevHouse, C=US, ST=California, L=Bay Area, O=shdh.org/emailAddress=welcome@shdh.org
+        Validity
+            Not Before: Jan 26 02:59:30 2009 GMT
+            Not After : Jan 26 02:59:30 2010 GMT
+        Subject: C=US, ST=California, O=SuperHappyDevHouse, CN=Dr. Devinda-House M.D.
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (1024 bit)
+                Modulus (1024 bit):
+                    00:bc:22:49:79:2b:10:64:53:6e:06:8d:57:53:81:
+                    53:db:92:3b:fe:a6:78:c5:5d:4e:cf:70:79:a1:6d:
+                    29:7a:ce:3d:9d:a3:15:fd:63:64:92:d8:fe:1b:c4:
+                    8e:8c:f9:65:47:1b:7a:90:af:c7:60:aa:78:4f:8c:
+                    68:af:52:62:22:96:54:7b:1f:14:cc:86:b6:0f:e1:
+                    9a:1b:fa:c9:5a:24:c0:13:f9:03:df:06:72:3c:f6:
+                    17:4d:c1:45:29:6b:e2:a8:88:b3:24:eb:cf:b0:48:
+                    40:61:34:1b:73:1c:60:5f:0b:b0:2c:d6:fe:a4:ff:
+                    5d:08:3c:2b:48:80:b8:66:4f
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Subject Key Identifier: 
+                32:0E:5A:5E:2A:CA:5F:AB:13:22:76:50:B4:51:13:16:23:C7:7F:A2
+            X509v3 Authority Key Identifier: 
+                keyid:FB:3B:BB:6C:58:8F:1D:6D:A0:4C:39:8A:08:1C:56:CF:6E:0B:19:11
+                DirName:/CN=SuperHappyDevHouse/C=US/ST=California/L=Bay Area/O=shdh.org/emailAddress=welcome@shdh.org
+                serial:F9:43:36:42:D7:77:87:C6
+
+            Netscape CA Revocation Url: 
+                https://shdh.org/crl.pem
+    Signature Algorithm: sha1WithRSAEncryption
+        4b:3f:9a:b3:20:ba:95:ac:cb:d1:c5:75:b4:89:ec:3a:ef:12:
+        f1:5a:2c:ce:d6:fb:2b:a2:c9:01:25:32:d1:b5:c4:ff:08:3a:
+        bc:32:95:d4:9b:99:8d:e0:ef:8c:1e:93:c0:0f:2c:a9:83:cc:
+        ed:e6:96:3c:bc:a8:16:26:26:d5:51:ff:35:a4:86:4b:6d:34:
+        6f:67:fb:bd:c8:21:f6:4a:e4:ad:23:ac:ab:36:d6:07:bc:3e:
+        88:03:6e:8b:14:00:f2:46:7a:62:d2:91:1e:ff:fb:a2:50:d3:
+        12:e6:34:05:be:14:8b:ad:31:91:1b:18:50:7b:8a:af:d1:4f:
+        72:36:77:f2:9b:58:c1:4b:44:f1:c0:6c:31:50:6f:9f:50:6d:
+        2b:cd:da:60:df:7b:c9:f7:e3:f5:11:8c:8e:c3:c7:32:da:11:
+        14:f6:30:1b:0b:5f:17:85:5e:82:56:b3:89:e9:3d:92:fb:b7:
+        dd:64:5c:8a:65:f8:4a:7e:74:27:a3:2c:8d:b2:c8:95:9c:8d:
+        76:35:43:5a:7a:87:ac:ef:f6:b4:13:cf:77:1c:fd:f6:f7:cf:
+        0a:17:a9:af:bb:7e:cb:79:13:7e:f0:8f:2d:fb:b2:3f:d2:d6:
+        01:c5:b1:3b:a6:fb:6d:a9:ae:c0:8a:62:a6:cf:a1:38:34:ec:
+        89:ae:55:94
+-----BEGIN CERTIFICATE-----
+MIID9TCCAt2gAwIBAgIBAjANBgkqhkiG9w0BAQUFADCBhjEbMBkGA1UEAxMSU3Vw
+ZXJIYXBweURldkhvdXNlMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5p
+YTERMA8GA1UEBxMIQmF5IEFyZWExETAPBgNVBAoTCHNoZGgub3JnMR8wHQYJKoZI
+hvcNAQkBFhB3ZWxjb21lQHNoZGgub3JnMB4XDTA5MDEyNjAyNTkzMFoXDTEwMDEy
+NjAyNTkzMFowYDELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExGzAZ
+BgNVBAoTElN1cGVySGFwcHlEZXZIb3VzZTEfMB0GA1UEAxMWRHIuIERldmluZGEt
+SG91c2UgTS5ELjCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAvCJJeSsQZFNu
+Bo1XU4FT25I7/qZ4xV1Oz3B5oW0pes49naMV/WNkktj+G8SOjPllRxt6kK/HYKp4
+T4xor1JiIpZUex8UzIa2D+GaG/rJWiTAE/kD3wZyPPYXTcFFKWviqIizJOvPsEhA
+YTQbcxxgXwuwLNb+pP9dCDwrSIC4Zk8CAwEAAaOCARUwggERMAkGA1UdEwQCMAAw
+HQYDVR0OBBYEFDIOWl4qyl+rEyJ2ULRRExYjx3+iMIG7BgNVHSMEgbMwgbCAFPs7
+u2xYjx1toEw5iggcVs9uCxkRoYGMpIGJMIGGMRswGQYDVQQDExJTdXBlckhhcHB5
+RGV2SG91c2UxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMREwDwYD
+VQQHEwhCYXkgQXJlYTERMA8GA1UEChMIc2hkaC5vcmcxHzAdBgkqhkiG9w0BCQEW
+EHdlbGNvbWVAc2hkaC5vcmeCCQD5QzZC13eHxjAnBglghkgBhvhCAQQEGhYYaHR0
+cHM6Ly9zaGRoLm9yZy9jcmwucGVtMA0GCSqGSIb3DQEBBQUAA4IBAQBLP5qzILqV
+rMvRxXW0iew67xLxWizO1vsroskBJTLRtcT/CDq8MpXUm5mN4O+MHpPADyypg8zt
+5pY8vKgWJibVUf81pIZLbTRvZ/u9yCH2SuStI6yrNtYHvD6IA26LFADyRnpi0pEe
+//uiUNMS5jQFvhSLrTGRGxhQe4qv0U9yNnfym1jBS0TxwGwxUG+fUG0rzdpg33vJ
+9+P1EYyOw8cy2hEU9jAbC18XhV6CVrOJ6T2S+7fdZFyKZfhKfnQnoyyNssiVnI12
+NUNaeoes7/a0E893HP32988KF6mvu37LeRN+8I8t+7I/0tYBxbE7pvttqa7AimKm
+z6E4NOyJrlWU
+-----END CERTIFICATE-----
