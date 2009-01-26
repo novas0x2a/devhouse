@@ -136,7 +136,7 @@ if __name__ == "__main__":
         reactor.listenTCP(10081, server.Site(sroot))
 
     reactor.listenSSL(10443, server.Site(sroot), \
-        secure.ServerContextFactory(myKey='certs/server.pem', trustedCA='certs/ca-cert.pem'))
+        secure.ServerContextFactory(myKey='certs/server.pem', trustedCA='certs/certificate_authority/shdh-ca.pem'))
         
     reactor.listenTCP(10080, server.Site(iroot)) 
     
