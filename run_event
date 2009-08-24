@@ -1,2 +1,10 @@
-#!/bin/sh
-python core.py data/rolodex.dat $*
+#!/bin/bash
+ 
+# Pop off the exe name
+shift 1
+
+if [[ $# -eq 1 ]]; then
+	python core.py data/rolodex.dat $1
+else
+	python core.py $*
+fi

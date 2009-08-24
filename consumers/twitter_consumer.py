@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #
 # Copyright (c) 2008, 2009 Adam Marshall Smith
 #

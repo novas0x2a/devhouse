@@ -11,7 +11,7 @@
       "font_path" : "./configuration/fonts/",
       "remove_accents" : true,
       "color" : [255, 255, 255],
-      "design" : ["background","sponsor","shdh_number","first_name","last_name","tags"]
+      "design" : ["background","shdh_number","first_name","last_name","tags","sponsor"]
    },
    "background" : {
       "file" : "./configuration/background.png",
@@ -20,8 +20,8 @@
    },
    "sponsor" : {
       "file" : "./configuration/sponsor.png",
-      "x" : 390,
-      "y" : 344
+      "x" : 420,
+      "y" : 324
    },
    "shdh_number" : {
       "height" : 110,

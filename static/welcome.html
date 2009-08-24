@@ -66,7 +66,7 @@ label.chosen {color:#333;}
 	border:none;
 }
 .buttonSubmitHovered {background-position:left bottom;}
-.buttonImg {vertical-align:bottom;}
+.buttonImg {vertical-align:bottom; border: 0px;}
 </style>
 <script type="text/javascript" src="prototype.js"></script>
 <script type="text/javascript" src="effects.js"></script>
@@ -235,7 +235,8 @@ var WelcomeSystem = {
     event_submitEmail: function(event) {
         Event.stop(event);
         var email = $F('email');
-        if (email.match(/^[0-9a-zA-Z][-_\.0-9a-zA-Z+]*[0-9a-zA-Z]+@([0-9a-zA-Z]+[-_\.0-9a-zA-Z]*[0-9a-zA-Z]+)+\.[a-zA-Z]{2,6}$/)) {
+	email = email.strip();
+        if (email.length > 1) {
             this.key = email;
             new Ajax.Request(this.BASE_PATH+'prefill'+this.PATH_SEPERATOR+this.key, {
                 method: 'get',
@@ -293,10 +294,10 @@ Event.observe(window, 'load', function() {
     <form id="email_form" action="#" style="display: none;">
         <div class="pane">
             <div>
-                <label for="email">Email:</label><br />
-                <img src="images/input_left.gif" alt="" /><input type="text" id="email" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" />
+                <label for="email">Unique ID (Email?):</label><br />
+                <nobr><img src="images/input_left.gif" alt="" /><input type="text" id="email" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" /></nobr>
             </div>
-            <div><img src="images/button_left.jpg" alt="" class="buttonImg"/><input type="submit" value="Get this party started!" class="buttonSubmit"/><img src="images/button_right.jpg" alt="" class="buttonImg"/>
+            <div><nobr><img src="images/button_left.jpg" alt="" class="buttonImg"/><input type="submit" value="Get this party started!" class="buttonSubmit"/><img src="images/button_right.jpg" alt="" class="buttonImg"/></nobr>
             </div>
         </div>
     </form>
@@ -307,25 +308,25 @@ Event.observe(window, 'load', function() {
                     <td>
                       <div>
                         <label for="first_name">First:</label><br />
-                        <img src="images/input_left.gif" alt="" /><input type="text" id="first_name" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" />
+                        <nobr><img src="images/input_left.gif" alt="" /><input type="text" id="first_name" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" /></nobr>
                       </div>
                     </td>
                     <td>&nbsp;</td>
                     <td>
                       <div>
                         <label for="last_name">Last:</label><br />
-                        <img src="images/input_left.gif" alt="" /><input type="text" id="last_name" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" />
+                        <nobr><img src="images/input_left.gif" alt="" /><input type="text" id="last_name" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" /></nobr>
                       </div>
                     </td>
                 </tr>
             </table>
             <div>
-                <label for="tags">Tags:</label><br />
-                <img src="images/input_left.gif" alt="" /><input type="text" id="tags" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" />
+                <label for="tags">Tags / Interests:</label><br />
+                <nobr><img src="images/input_left.gif" alt="" /><input type="text" id="tags" value="" class="textinput" autocomplete="off" /><img src="images/input_right.gif" alt="" /></nobr>
             </div>
             <div>
-              <img src="images/button_left.jpg" alt="" class="buttonImg"/><input type="button" value="&lt;&lt; Oops!" onclick="WelcomeSystem.startOver();" class="buttonSubmit"/><img src="images/button_right.jpg" alt="" class="buttonImg"/>
-              <img src="images/button_left.jpg" alt="" class="buttonImg"/><input type="submit" value="Finish this up!" class="buttonSubmit"/><img src="images/button_right.jpg" alt="" class="buttonImg"/>
+              <nobr><img src="images/button_left.jpg" alt="" class="buttonImg"/><input type="button" value="&lt;&lt; Oops!" onclick="WelcomeSystem.startOver();" class="buttonSubmit"/><img src="images/button_right.jpg" alt="" class="buttonImg"/></nobr>
+              <nobr><img src="images/button_left.jpg" alt="" class="buttonImg"/><input type="submit" value="Finish this up!" class="buttonSubmit"/><img src="images/button_right.jpg" alt="" class="buttonImg"/></nobr>
             </div>
         </div>
     </form>
